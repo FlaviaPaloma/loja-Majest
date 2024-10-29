@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ABSOLUTE</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="logo.png">
+</head>
+<body>
+
+<div class="background2">
+    <header>
+        <div class="logo"> 
+            <h1>ABSOLUTE</h1>
+        </div>
+        <div class="cabeçalho-link">
+            <li>
+                <li><a href="index.html">inicio</a></li>
+                <li><a href="index.html">destaque</a></li>
+                <li><a href="index.html">novo</a></li>
+                <li><a href="index.html">contato</a></li>
+                <li>
+                    <a href="carrinho.html">
+                        <button style="height: 40px; margin-top: -10px; width: 100px; background-color: #c8815f;
+                         border-radius: 10px; color: aliceblue; cursor: pointer;" 
+                         onmouseover="this.style.backgroundColor='#000000';"
+                         onmouseout="this.style.backgroundColor='#c8815f';" >
+                             carrinho
+                        </button>
+                    </a>
+                </li>
+            </li>
+        </div>
+        <div class="icon">
+            <ion-icon name="bag-outline"></ion-icon>
+        </div>
+    </header>
+
+    <div class="container">
+        <div class="product">
+            <div class="product-image">
+                <img src="camisa1.jpg" alt="Imagem do Produto" style="margin-top: 150px;">
+            </div>
+            <div class="product-info">
+                <h3 style="margin-top: 130px;">Camisa Preta</h3>
+                <div class="panel">
+                    <p>Esta é a descrição detalhada do produto. Aqui você pode fornecer informações sobre suas características, 
+                    funcionalidades, materiais, tamanhos disponíveis, e qualquer outra informação relevante para seus clientes.</p>
+                </div>
+                <h4>R$ 139,99</h4>
+                <label for="size">Tamanho:</label>
+                <select id="sizeOptions">
+                    <option value="P">P</option>
+                    <option value="M">M</option>
+                    <option value="G">G</option>
+                    <option value="GG">GG</option>
+                </select>
+                <label for="quantidade">Quantidade:</label>
+                <input type="number" id="quantidade" name="quantidade" min="1" max="100" value="1">
+                <button type="button" id="addToCartButton">Adicionar ao Carrinho</button>
+            </div>
+        </div>
+    </div>
+
+    <div class="center">
+        <table class="size-table" style="margin-left: 700px; margin-top: -170px;">
+            <tr>
+                <th>Tamanho</th>
+                <th>Busto (cm)</th>
+                <th>Cintura (cm)</th>
+                <th>Quadril (cm)</th>
+            </tr>
+            <tr>
+                <td>P</td>
+                <td>84-88</td>
+                <td>64-68</td>
+                <td>90-94</td>
+            </tr>
+            <tr>
+                <td>M</td>
+                <td>89-93</td>
+                <td>69-73</td>
+                <td>95-99</td>
+            </tr>
+            <tr>
+                <td>G</td>
+                <td>94-98</td>
+                <td>74-78</td>
+                <td>100-104</td>
+            </tr>
+            <tr>
+                <td>GG</td>
+                <td>99-103</td>
+                <td>79-83</td>
+                <td>105-109</td>
+            </tr>
+        </table>
+    </div>
+
+</div>
+  
+  <div class="nav">
+      <a class="nav-link active" id="video-link" href="https://youtu.be/qFdoMMR-7fc?si=CakMOf5c8W08l32h" target="_blank">Vídeo</a>
+      <a class="nav-link" id="comments-link" href="#">Comentários</a>
+  </div>
+
+  <div id="video" style="display: none;">
+      
+      <a href="https://youtu.be/qFdoMMR-7fc?si=CakMOf5c8W08l32h">Vídeo</a>
+  </div>
+
+    <div id="comments" style="display: none;">
+        <h2>Comentários</h2>
+        <ul id="comment-list"></ul>
+        <form id="comment-form">
+            <input type="text" id="comment-input" placeholder="Adicione um comentário...">
+            <button type="submit">Enviar</button>
+        </form>
+    </div>
+
+
+
+  <div id="comments-container" style="margin-left: 650px;">
+ 
+  </div>
+
+  <section class="Contato">
+
+      <div class="meio-contato">
+          <h3>CLÁSSICOS</h3>
+          <H5>Envie mensagem</H5>
+      </div>
+
+      <div class="meio-contato">
+          <h3>EXPLORE</h3>
+          <nav>
+          <li><a href="#">inicio</a></li>
+          <li><a href="#">Destaque</a></li>
+          <li><a href="#">Novo</a></li>
+          <li><a href="#">Contato</a></li>
+      </div>
+
+      <div class="meio-contato">
+          <nav>
+          <h3>NOSSOS SERVIÇOS</h3>
+          <li><a href="#">Confiável</a></li>
+          <li><a href="#">Rápido</a></li>
+          <li><a href="#">Seguro</a></li>
+          </nav>
+      </div>
+
+      <div class="meio-contato">
+          <h3>LOJA</h3>
+          <nav>
+          <li><a href="#">vestuário </a></li>
+          <li><a href="#">Tendências</a></li>
+          <li><a href="#">Acessórios</a></li>
+          <li><a href="#">venda</a></li>
+          </nav>
+      </div>
+
+  </section>
+
+
+  <footer>
+      <p style="margin-left: 50%;">&copy; ABSOLUTE</p>
+  </footer>
+
+
+
+<script>
+    document.getElementById('addToCartButton').addEventListener('click', function() {
+        const productName = 'Camisa Preta De Botão';
+        const price = 139.99; 
+        const size = document.getElementById('sizeOptions').value; 
+        const quantity = document.getElementById('quantidade').value; 
+        const total = price * quantity;
+        const cartItem = {
+            name: productName,
+            price: price,
+            size: size, 
+            quantity: quantity 
+        };
+        let cart = JSON.parse(localStorage.getItem('cart')) || [];
+        cart.push(cartItem);
+        localStorage.setItem('cart', JSON.stringify(cart));
+        alert('Produto adicionado ao carrinho!');
+    });
+
+  document.getElementById("comments-link").addEventListener("click", function(event) {
+      event.preventDefault();
+      document.getElementById("video").style.display = "none";
+      document.getElementById("comments").style.display = "block";
+  });
+
+  document.getElementById("comment-form").addEventListener("submit", function(event) {
+      event.preventDefault();
+      var commentInput = document.getElementById("comment-input").value;
+      if (commentInput.trim() !== "") {
+          var commentList = document.getElementById("comment-list");
+          var listItem = document.createElement("li");
+          listItem.textContent = commentInput;
+          commentList.appendChild(listItem);
+          document.getElementById("comment-input").value = "";
+      }
+
+  });
+  
+</script>
+
+</body>
+</html>

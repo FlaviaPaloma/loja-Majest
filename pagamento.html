@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" type="text/css" href="style.css">
+  <link rel="icon" href="logo.png">
+
+    <title>Página de Pagamento</title>
+</head>
+<body>
+
+
+  <div class="background2">
+      <header>
+          <div class="logo"> 
+              <h1>ABSOLUTE</h1>
+          </div>
+          <div class="cabeçalho-link">
+              <li>
+                  <a href="index.html">inicio</a>
+              </li>
+              <li>
+                  <a href="index.html">destaque</a>
+              </li>
+              <li>
+                  <a href="index.html">novo</a>
+              </li>
+              <li>
+                  <a href="index.html">contato</a>
+              </li>
+
+          </div>
+          <div class="icon">
+              <ion-icon name="bag-outline"></ion-icon>
+          </div>
+      </header>
+
+    
+
+    <div id="total-container">
+        <p style="margin-top: 150px; font-size: 20px; margin-left: 25px;"">Total da Compra: R$ <span id="total"></span></p>
+    </div>
+
+    <h2 style="font-size: 25px;  margin-top: 0px; margin-left: 20px;">Escolha o método de pagamento</h2>
+    
+    <button onclick="pagarComCartao()" style="margin-top: 20px;  style="height: 30px; width: 100px; background-color: #c8815f;
+      border-radius: 10px; color: aliceblue; cursor: pointer;" 
+      onmouseover="this.style.backgroundColor='#b97c5f';"
+      onmouseout="this.style.backgroundColor='#c8815f';">Pagar com Cartão</button> 
+    
+    <button onclick="pagarComPix()" style="style="height: 30px; width: 100px; background-color: #c8815f;
+      border-radius: 10px; color: aliceblue; cursor: pointer;" 
+      onmouseover="this.style.backgroundColor='#b97c5f';"
+      onmouseout="this.style.backgroundColor='#c8815f';";>Pagar com Pix</button> 
+      
+    <button onclick="gerarBoleto()" style="style="height: 30px; width: 100px; background-color: #c8815f;
+      border-radius: 10px; color: aliceblue; cursor: pointer;" 
+      onmouseover="this.style.backgroundColor='#b97c5f';"
+      onmouseout="this.style.backgroundColor='#c8815f';" >Gerar Boleto</button>
+
+    <div id="form-cartao" style="display: none;">
+        <h2 style="text-align: center;; font-size: 20px;">Detalhes do Cartão:</h2>
+        <div class="img-container">
+           
+            <img id="img-1" src="american_express.jpg" alt="Imagem 1" style="display: none; margin-left: 45%; height: 25px; width: 40px;">
+            <img id="img-2" src="visa.jpg" alt="Imagem 2" style="display: none; margin-left: 45%; height: 25px; width: 40px;">
+            <img id="img-3" src="mastercard.jpg" alt="Imagem 3" style="display: none; margin-left: 45%; height: 25px; width: 40px;">
+            <img id="img-4" src="Logo Cartão ELO – Logos PNG.jpg" alt="Imagem 4" style="display: none; margin-left: 45%; height: 25px; width: 40px;">
+        </div>
+        <form>
+            <label for="numero">Número do Cartão:</label><br>
+            <input type="text" id="numero" name="numero" oninput="mostrarImagemCartao(this.value)"><br>
+            <label for="nome">Nome no Cartão:</label><br>
+            <input type="text" id="nome" name="nome"><br>
+            <label for="data">Data de Validade:</label><br>
+            <input type="date" id="data" name="data"><br>
+            <label for="cvv">CVV:</label><br>
+            <input type="text" id="cvv" name="cvv" maxlength="3"><br><br>
+            <button type="submit" style="height: 30px; width: 100px; background-color: #c8815f;
+              border-radius: 10px; color: aliceblue; cursor: pointer;" 
+              onmouseover="this.style.backgroundColor='#b97c5f';"
+              onmouseout="this.style.backgroundColor='#c8815f';">Pagar</button>
+        </form>
+    </div>
+
+  <div id="pix-container" class="qr-container" style="margin-left:45%; margin-top: 50px;"></div>
+
+    <p id="pix-key" style="display: none;"></p>
+
+    <script src="https://cdn.jsdelivr.net/gh/davidshimjs/qrcodejs/qrcode.min.js"></script>
+    <script>
+        window.onload = function() {
+            
+            const urlParams = new URLSearchParams(window.location.search);
+            const total = urlParams.get('total');
+
+           
+            document.getElementById('total').textContent = total;
+        };
+
+        function pagarComCartao() {
+          
+            document.getElementById('form-cartao').style.display = 'block';
+            document.getElementById('pix-container').style.display = 'none';
+            document.getElementById('pix-key').style.display = 'none';
+        }
+
+        function pagarComPix() {
+           
+            const totalCompra = parseFloat(document.getElementById('total').textContent);
+
+            
+            const chavePix = "sua-chave-pix-aqui";
+
+            
+            document.getElementById('pix-key').textContent = "Chave PIX: " + chavePix + "?valor=" + totalCompra.toFixed(2);
+            document.getElementById('pix-container').style.display = 'block';
+            document.getElementById('pix-key').style.display = 'block';
+            document.getElementById('form-cartao').style.display = 'none';
+
+           
+            const qrContainer = document.getElementById('pix-container');
+            qrContainer.innerHTML = '';
+            const qrCode = new QRCode(qrContainer, {
+                text: "pix:" + chavePix + "?valor=" + totalCompra.toFixed(2),
+                width: 128,
+                height: 128
+            });
+        }
+
+        function gerarBoleto() {
+            
+            alert('Boleto gerado com sucesso!');
+        }
+
+        
+        function mostrarImagemCartao(numero) {
+            const primeiroDigito = numero.charAt(0);
+            if (primeiroDigito === '3') {
+                document.getElementById('img-1').style.display = 'block';
+                document.getElementById('img-2').style.display = 'none';
+                document.getElementById('img-3').style.display = 'none';
+                document.getElementById('img-4').style.display = 'none';
+            } else if (primeiroDigito === '4') {
+                document.getElementById('img-1').style.display = 'none';
+                document.getElementById('img-2').style.display = 'block';
+                document.getElementById('img-3').style.display = 'none';
+                document.getElementById('img-4').style.display = 'none';
+            } else if (primeiroDigito === '2' || primeiroDigito === '5') {
+                document.getElementById('img-1').style.display = 'none';
+                document.getElementById('img-2').style.display = 'none';
+                document.getElementById('img-3').style.display = 'block';
+                document.getElementById('img-4').style.display = 'none';
+            } else if (primeiroDigito === '6') {
+                document.getElementById('img-1').style.display = 'none';
+                document.getElementById('img-1').style.display = 'none';
+                document.getElementById('img-2').style.display = 'none';
+                document.getElementById('img-3').style.display = 'none';
+                document.getElementById('img-4').style.display = 'block';
+            } else {
+          
+                document.querySelectorAll('.img-container img').forEach(function(img) {
+                    img.style.display = 'none';
+                });
+            }
+        }
+    </script>
+</body>
+</html>

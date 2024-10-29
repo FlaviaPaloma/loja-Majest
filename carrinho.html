@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Carrinho de Compras</title>
+    <link rel="stylesheet" href="style.css">
+    <link rel="icon" href="logo.png">
+</head>
+<body>
+
+<div class="background2">
+    <header>
+        <div class="logo"> 
+            <h1>ABSOLUTE</h1>
+        </div>
+        <div class="cabeçalho-link">
+            <li>
+                <li><a href="index.html">inicio</a></li>
+                <li><a href="index.html">destaque</a></li>
+                <li><a href="index.html">novo</a></li>
+                <li><a href="index.html">contato</a></li>
+                </a>
+            </li>
+        </div>
+        <div class="icon">
+            <ion-icon name="bag-outline"></ion-icon>
+        </div>
+    </header>
+
+    <div class="cart" id="cart" style="margin-top:200px; margin-left: 100px;  width: 500px; border-radius: 10px;"></div>
+
+    <div class="total" style="margin-top: 10px; margin-left: 100px; margin-top: 20px;">
+        <span>Total: R$ <span id="total">0.00</span></span>
+    </div>
+    
+    <button class="btn continue" onclick="continuarComprando()" style="height: 40px;  margin-top: 20px; background-color: #c8815f; margin-left: 100px; 
+      border-radius: 10px; color: aliceblue; cursor: pointer;" 
+      onmouseover="this.style.backgroundColor='#000000';"
+      onmouseout="this.style.backgroundColor='#c8815f';">Continuar Comprando</button>
+    
+    <button class="btn checkout" onclick="finalizarCompra()" style="border-radius: 10px; height: 40px; margin-left: 50px;">Finalizar Compra</button>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            exibirItensCarrinho();
+            exibirTotal();
+        });
+
+        function exibirItensCarrinho() {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            let cartDiv = document.getElementById('cart');
+            let total = 0;
+
+            cartDiv.innerHTML = '';
+
+            cart.forEach((item, index) => {
+                let itemDiv = document.createElement('div');
+                itemDiv.classList.add('item');
+
+                let totalPrice = item.price * item.quantity;
+
+                itemDiv.innerHTML = `
+                    <span class="product-name">${item.name}</span>
+                    <span class="size">Tamanho: ${item.size} <br> </span>
+                    <span class="price">R$ ${totalPrice.toFixed(2)}</span>
+                    <div class="quantity">
+                        <button class="btn decrease" onclick="decreaseQuantity(${index})">-</button>
+                        <span class="qty">${item.quantity}</span>
+                        <button class="btn increase" onclick="increaseQuantity(${index})">+</button>
+                    </div>
+                    <button class="btn remove" onclick="removeItem(${index})">Remover</button>
+                `;
+
+                cartDiv.appendChild(itemDiv);
+                total += totalPrice;
+            });
+
+            document.getElementById('total').textContent = total.toFixed(2);
+        }
+
+        function exibirTotal() {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            let total = 0;
+
+            cart.forEach((item) => {
+                total += item.price * item.quantity;
+            });
+
+            document.getElementById('total').textContent = total.toFixed(2);
+        }
+
+        function decreaseQuantity(index) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            if (cart[index].quantity > 1) {
+                cart[index].quantity--;
+                localStorage.setItem('cart', JSON.stringify(cart));
+                exibirItensCarrinho();
+            }
+        }
+
+        function increaseQuantity(index) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart[index].quantity++;
+            localStorage.setItem('cart', JSON.stringify(cart));
+            exibirItensCarrinho();
+        }
+
+        function removeItem(index) {
+            let cart = JSON.parse(localStorage.getItem('cart')) || [];
+            cart.splice(index, 1);
+            localStorage.setItem('cart', JSON.stringify(cart));
+            exibirItensCarrinho();
+        }
+
+        function continuarComprando() {
+            window.location.href = 'index.html';
+        }
+
+        function finalizarCompra() {
+            alert('Compra finalizada com sucesso!');
+            let total = document.getElementById('total').textContent;
+            window.location.href = 'pagamento.html?total=' + total;
+        }
+    </script>
+</body>
+</html>
